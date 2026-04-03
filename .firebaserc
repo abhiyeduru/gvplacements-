@@ -2,6 +2,17 @@
   "projects": {
     "default": "gravi-multiple"
   },
-  "targets": {},
+  "targets": {
+    "gravi-multiple": {
+      "hosting": {
+        "gravi-multiple": [
+          "gravi-multiple"
+        ],
+        "gvplacements": [
+          "gvplacements"
+        ]
+      }
+    }
+  },
   "etags": {}
 }

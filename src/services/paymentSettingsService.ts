@@ -103,10 +103,10 @@ export const paymentSettingsService = {
   async getSelectedAmount(): Promise<number> {
     try {
       const settings = await this.getSettings();
-      return settings?.selectedAmount || 2000;
+      return settings?.selectedAmount || 1;
     } catch (error) {
       console.error('Error getting selected amount:', error);
-      return 2000;
+      return 1;
     }
   },
 };

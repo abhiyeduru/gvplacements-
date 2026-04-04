@@ -21,10 +21,10 @@ export default function RegistrationForm({ onClose }: RegistrationFormProps) {
   const [successId, setSuccessId] = useState('');
   const [successCandidate, setSuccessCandidate] = useState<CandidateData | null>(null);
   const [error, setError] = useState('');
-  const [paymentAmount, setPaymentAmount] = useState(2000);
+  const [paymentAmount, setPaymentAmount] = useState(1);
   const [formData, setFormData] = useState<Partial<CandidateData>>({
     paymentStatus: 'pending',
-    paymentAmount: 2000,
+    paymentAmount: 1,
     status: 'registered',
   });
   const [files, setFiles] = useState<{ resume?: File; pan?: File }>({});

@@ -4,6 +4,10 @@ import AdminDashboard from './pages/AdminDashboard';
 import TestPage from './pages/TestPage';
 import FirestoreDebugPage from './pages/FirestoreDebugPage';
 import RazorpayDiagnostic from './pages/RazorpayDiagnostic';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import RefundPolicy from './pages/RefundPolicy';
 import { theme } from './styles/theme';
 
 export default function App() {
@@ -24,6 +28,23 @@ export default function App() {
   // Check if Razorpay diagnostic page is requested
   if (window.location.pathname === '/razorpay-diagnostic') {
     return <RazorpayDiagnostic />;
+  }
+
+  // Check for policy pages
+  if (window.location.pathname === '/about') {
+    return <AboutUs />;
+  }
+
+  if (window.location.pathname === '/contact') {
+    return <ContactUs />;
+  }
+
+  if (window.location.pathname === '/privacy') {
+    return <PrivacyPolicy />;
+  }
+
+  if (window.location.pathname === '/refund') {
+    return <RefundPolicy />;
   }
 
   // Admin access with password
@@ -140,7 +161,7 @@ export default function App() {
             />
           </div>
           <div style={styles.pricingTag}>Registration Fee</div>
-          <div style={styles.price}>₹2,000</div>
+          <div style={styles.price}>₹1</div>
           <p style={styles.priceNote}>One-time · Non-refundable · Covers full placement support</p>
           <ul style={styles.featureList}>
             <li>Interview scheduling (2 phases)</li>
@@ -150,7 +171,7 @@ export default function App() {
             <li>Success-based commission (only after placement)</li>
           </ul>
           <button style={{ ...styles.btnPrimary, width: '100%' }} onClick={() => setShowForm(true)}>
-            Pay ₹2,000 & Start Your Career Journey 🚀
+            Pay ₹1 & Start Your Career Journey 🚀
           </button>
         </div>
       </section>
@@ -169,11 +190,45 @@ export default function App() {
 
       {/* Footer */}
       <footer style={styles.footer}>
-        <div style={styles.logo}>
-          gravity<span style={{ color: theme.colors.gold }}>.</span>
+        <div style={styles.footerContent}>
+          <div style={styles.footerSection}>
+            <div style={styles.logo}>
+              gravity<span style={{ color: theme.colors.gold }}>.</span>
+            </div>
+            <p style={styles.footerText}>Professional job placement assistance with dedicated interview scheduling and career coaching.</p>
+          </div>
+
+          <div style={styles.footerSection}>
+            <h4 style={styles.footerTitle}>Quick Links</h4>
+            <ul style={styles.footerLinks}>
+              <li><a href="/" style={styles.footerLink}>Home</a></li>
+              <li><a href="/#how-it-works" style={styles.footerLink}>How It Works</a></li>
+              <li><a href="/#terms" style={styles.footerLink}>Terms</a></li>
+            </ul>
+          </div>
+
+          <div style={styles.footerSection}>
+            <h4 style={styles.footerTitle}>Policies</h4>
+            <ul style={styles.footerLinks}>
+              <li><a href="/about" style={styles.footerLink}>About Us</a></li>
+              <li><a href="/privacy" style={styles.footerLink}>Privacy Policy</a></li>
+              <li><a href="/refund" style={styles.footerLink}>Refund Policy</a></li>
+            </ul>
+          </div>
+
+          <div style={styles.footerSection}>
+            <h4 style={styles.footerTitle}>Support</h4>
+            <ul style={styles.footerLinks}>
+              <li><a href="/contact" style={styles.footerLink}>Contact Us</a></li>
+              <li><a href="mailto:support@gvplacements.com" style={styles.footerLink}>Email Support</a></li>
+            </ul>
+          </div>
         </div>
-        <p>© 2025 Gravity Job Assistance · Powered by <span style={{ color: theme.colors.gold }}>Mentneo</span></p>
-        <p style={{ marginTop: '6px' }}>Built with Firebase · Razorpay · AWS S3</p>
+
+        <div style={styles.footerBottom}>
+          <p>© 2025 Gravity Job Placement. All rights reserved.</p>
+          <p style={{ marginTop: '6px' }}>Secure payments via Razorpay | Data protected by Firebase</p>
+        </div>
       </footer>
 
       {/* Modal */}
@@ -491,6 +546,51 @@ const styles = {
   footer: {
     borderTop: `1px solid ${theme.colors.border}`,
     padding: 'clamp(24px, 5vw, 40px)',
+    background: theme.colors.bg2,
+  },
+  footerContent: {
+    maxWidth: '1000px',
+    margin: '0 auto',
+    display: 'grid' as const,
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: 'clamp(24px, 5vw, 40px)',
+    marginBottom: '32px',
+  },
+  footerSection: {
+    display: 'flex' as const,
+    flexDirection: 'column' as const,
+    gap: '12px',
+  },
+  footerTitle: {
+    fontSize: 'clamp(12px, 2vw, 14px)',
+    fontWeight: 600,
+    color: theme.colors.gold,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '1px',
+    margin: 0,
+  },
+  footerLinks: {
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+  },
+  footerLink: {
+    fontSize: 'clamp(12px, 2vw, 14px)',
+    color: theme.colors.text2,
+    textDecoration: 'none',
+    transition: 'color 0.2s',
+  },
+  footerText: {
+    fontSize: 'clamp(12px, 2vw, 14px)',
+    color: theme.colors.text2,
+    lineHeight: 1.6,
+    margin: 0,
+  },
+  footerBottom: {
+    maxWidth: '1000px',
+    margin: '0 auto',
+    paddingTop: '24px',
+    borderTop: `1px solid ${theme.colors.border}`,
     textAlign: 'center' as const,
     color: theme.colors.text3,
     fontSize: 'clamp(11px, 2vw, 13px)',

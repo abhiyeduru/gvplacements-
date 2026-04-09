@@ -16,7 +16,7 @@ const DEMO_MODE = import.meta.env.MODE === 'development' ||
                   (typeof window !== 'undefined' && (window as any).__DEMO_MODE__);
 
 // Razorpay Payment Link
-const RAZORPAY_PAYMENT_LINK = 'https://rzp.io/rzp/ekZO55G';
+const RAZORPAY_PAYMENT_LINK = 'https://rzp.io/rzp/vgMJARt';
 
 export const initiateRazorpayPayment = async (
   candidateData: CandidateData,

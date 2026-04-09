@@ -16,7 +16,7 @@ Using Razorpay Payment Links instead of embedded checkout. This is simpler and m
 
 ## Payment Link Details
 
-**Link**: https://rzp.io/rzp/ekZO55G
+**Link**: https://rzp.io/rzp/vgMJARt
 
 This link is configured with:
 - ✅ Amount: ₹1 (configurable)
@@ -130,7 +130,7 @@ To change the payment link:
 
 ## Current Configuration
 
-- **Payment Link**: https://rzp.io/rzp/ekZO55G
+- **Payment Link**: https://rzp.io/rzp/vgMJARt
 - **Amount**: ₹1
 - **Currency**: INR
 - **Return URL**: https://www.gvplacements.com/payment-return

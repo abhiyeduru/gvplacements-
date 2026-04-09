@@ -11,6 +11,10 @@ declare global {
 let lastPaymentAttempt = 0;
 const PAYMENT_COOLDOWN = 2000; // 2 seconds between attempts
 
+// Demo mode for testing without Firestore
+const DEMO_MODE = import.meta.env.MODE === 'development' || 
+                  (typeof window !== 'undefined' && (window as any).__DEMO_MODE__);
+
 export const initiateRazorpayPayment = async (
   candidateData: CandidateData,
   onSuccess: (response: PaymentResponse) => void,
@@ -33,6 +37,7 @@ export const initiateRazorpayPayment = async (
   console.log('- import.meta.env.VITE_RAZORPAY_KEY:', import.meta.env.VITE_RAZORPAY_KEY ? '✓ Set' : '✗ Missing');
   console.log('- window.__RAZORPAY_KEY__:', (window as any).__RAZORPAY_KEY__ ? '✓ Set' : '✗ Missing');
   console.log('- Using key:', razorpayKey?.substring(0, 15) + '...');
+  console.log('- Demo mode:', DEMO_MODE ? '✓ Enabled' : '✗ Disabled');
 
   // Verify Razorpay is loaded
   if (!window.Razorpay) {
@@ -52,8 +57,17 @@ export const initiateRazorpayPayment = async (
   }
 
   try {
-    // Get the amount set by admin
-    const amount = await paymentSettingsService.getSelectedAmount();
+    // Get the amount set by admin (with fallback for demo mode)
+    let amount = 1;
+    try {
+      amount = await paymentSettingsService.getSelectedAmount();
+    } catch (err) {
+      console.warn('⚠️ Could not fetch payment amount from Firestore, using default:', amount);
+      if (!DEMO_MODE) {
+        throw err; // Re-throw if not in demo mode
+      }
+    }
+    
     const amountInPaise = amount * 100; // Convert to paise
 
     console.log('💳 Initiating Razorpay payment:');
@@ -99,6 +113,8 @@ export const initiateRazorpayPayment = async (
       onError('Invalid Razorpay key. Check configuration.');
     } else if (errorMsg.includes('CORS')) {
       onError('CORS error. Check domain settings in Razorpay dashboard.');
+    } else if (errorMsg.includes('permission') || errorMsg.includes('403')) {
+      onError('Firebase permission denied. Admin needs to update Firestore security rules.');
     } else {
       onError(`Payment error: ${errorMsg}`);
     }

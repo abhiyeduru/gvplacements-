@@ -205,7 +205,7 @@ export default function RazorpayTest() {
                 {result.signature && (
                   <div style={styles.resultRow}>
                     <span style={styles.resultLabel}>Signature:</span>
-                    <span style={styles.resultValue} style={{ fontSize: '12px', wordBreak: 'break-all' }}>
+                    <span style={{ ...styles.resultValue, fontSize: '12px', wordBreak: 'break-all' }}>
                       {result.signature}
                     </span>
                   </div>

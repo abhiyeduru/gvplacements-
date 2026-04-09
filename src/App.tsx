@@ -4,6 +4,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import TestPage from './pages/TestPage';
 import FirestoreDebugPage from './pages/FirestoreDebugPage';
 import RazorpayDiagnostic from './pages/RazorpayDiagnostic';
+import RazorpayTest from './pages/RazorpayTest';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -28,6 +29,11 @@ export default function App() {
   // Check if Razorpay diagnostic page is requested
   if (window.location.pathname === '/razorpay-diagnostic') {
     return <RazorpayDiagnostic />;
+  }
+
+  // Check if Razorpay test page is requested
+  if (window.location.pathname === '/razorpay-test') {
+    return <RazorpayTest />;
   }
 
   // Check for policy pages

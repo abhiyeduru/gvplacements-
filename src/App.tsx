@@ -11,6 +11,7 @@ import ContactUs from './pages/ContactUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
+import AlternateDomain from './pages/AlternateDomain';
 import { theme } from './styles/theme';
 
 export default function App() {
@@ -61,6 +62,10 @@ export default function App() {
 
   if (window.location.pathname === '/terms') {
     return <TermsAndConditions />;
+  }
+
+  if (window.location.pathname === '/domains') {
+    return <AlternateDomain />;
   }
 
   // Admin access with password
@@ -237,6 +242,7 @@ export default function App() {
             <h4 style={styles.footerTitle}>Support</h4>
             <ul style={styles.footerLinks}>
               <li><a href="/contact" style={styles.footerLink}>Contact Us</a></li>
+              <li><a href="/domains" style={styles.footerLink}>Alternate Domains</a></li>
               <li><a href="mailto:support@gvplacements.com" style={styles.footerLink}>Email Support</a></li>
             </ul>
           </div>

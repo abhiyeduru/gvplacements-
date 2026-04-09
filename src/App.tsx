@@ -5,16 +5,17 @@ import TestPage from './pages/TestPage';
 import FirestoreDebugPage from './pages/FirestoreDebugPage';
 import RazorpayDiagnostic from './pages/RazorpayDiagnostic';
 import RazorpayTest from './pages/RazorpayTest';
+import RazorpayTerms from './pages/RazorpayTerms';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 import { theme } from './styles/theme';
 
 export default function App() {
   const [showForm, setShowForm] = useState(false);
   const [isAdminMode, setIsAdminMode] = useState(false);
-  const [isTestMode, setIsTestMode] = useState(false);
 
   // Check if test page is requested
   if (window.location.pathname === '/test') {
@@ -36,6 +37,11 @@ export default function App() {
     return <RazorpayTest />;
   }
 
+  // Check if Razorpay terms page is requested
+  if (window.location.pathname === '/razorpay-terms') {
+    return <RazorpayTerms onClose={() => window.history.back()} />;
+  }
+
   // Check for policy pages
   if (window.location.pathname === '/about') {
     return <AboutUs />;
@@ -51,6 +57,10 @@ export default function App() {
 
   if (window.location.pathname === '/refund') {
     return <RefundPolicy />;
+  }
+
+  if (window.location.pathname === '/terms') {
+    return <TermsAndConditions />;
   }
 
   // Admin access with password
@@ -217,6 +227,7 @@ export default function App() {
             <h4 style={styles.footerTitle}>Policies</h4>
             <ul style={styles.footerLinks}>
               <li><a href="/about" style={styles.footerLink}>About Us</a></li>
+              <li><a href="/terms" style={styles.footerLink}>Terms & Conditions</a></li>
               <li><a href="/privacy" style={styles.footerLink}>Privacy Policy</a></li>
               <li><a href="/refund" style={styles.footerLink}>Refund Policy</a></li>
             </ul>

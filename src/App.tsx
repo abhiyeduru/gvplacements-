@@ -12,6 +12,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
 import AlternateDomain from './pages/AlternateDomain';
+import PaymentReturn from './pages/PaymentReturn';
 import { theme } from './styles/theme';
 
 export default function App() {
@@ -66,6 +67,10 @@ export default function App() {
 
   if (window.location.pathname === '/domains') {
     return <AlternateDomain />;
+  }
+
+  if (window.location.pathname === '/payment-return') {
+    return <PaymentReturn />;
   }
 
   // Admin access with password

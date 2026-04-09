@@ -92,15 +92,19 @@ export default function RegistrationForm({ onClose }: RegistrationFormProps) {
         candidateData,
         async (response) => {
           try {
+            console.log('🎉 Payment handler callback received');
             candidateData.paymentId = response.razorpay_payment_id;
             candidateData.paymentStatus = 'success';
             
             console.log('✓ Payment successful, saving profile...');
             const docId = await saveCandidateProfile(candidateData);
+            console.log('✓ Profile saved with ID:', docId);
+            
             setSuccessId(docId);
             setSuccessCandidate(candidateData);
             setSuccess(true);
             setLoading(false);
+            console.log('✓ Success state updated, showing success screen');
           } catch (err) {
             console.error('❌ Error saving profile:', err);
             setError('Profile saved but error in confirmation. Contact support.');

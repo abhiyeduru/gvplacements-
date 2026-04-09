@@ -88,7 +88,10 @@ export const initiateRazorpayPayment = async (
       },
       theme: { color: '#f5a623' },
       handler: (response: PaymentResponse) => {
-        console.log('✅ Payment successful:', response);
+        console.log('✅ Payment successful - Handler called:', response);
+        console.log('- Payment ID:', response.razorpay_payment_id);
+        console.log('- Order ID:', response.razorpay_order_id);
+        console.log('- Signature:', response.razorpay_signature);
         onSuccess(response);
       },
       modal: {
@@ -101,6 +104,7 @@ export const initiateRazorpayPayment = async (
 
     const rzp = new window.Razorpay(options);
     console.log('🔓 Opening Razorpay modal...');
+    console.log('- Options:', options);
     rzp.open();
   } catch (error) {
     console.error('❌ Payment initialization error:', error);

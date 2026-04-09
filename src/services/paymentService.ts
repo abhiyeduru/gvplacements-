@@ -24,14 +24,30 @@ export const initiateRazorpayPayment = async (
   }
   lastPaymentAttempt = now;
 
+  // Get Razorpay key - try multiple sources
+  const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY || 
+                      (window as any).__RAZORPAY_KEY__ ||
+                      'rzp_live_SMj9EQLZSXaW4g'; // Fallback to live key
+
+  console.log('🔍 Razorpay Key Debug:');
+  console.log('- import.meta.env.VITE_RAZORPAY_KEY:', import.meta.env.VITE_RAZORPAY_KEY ? '✓ Set' : '✗ Missing');
+  console.log('- window.__RAZORPAY_KEY__:', (window as any).__RAZORPAY_KEY__ ? '✓ Set' : '✗ Missing');
+  console.log('- Using key:', razorpayKey?.substring(0, 15) + '...');
+
   // Verify Razorpay is loaded
   if (!window.Razorpay) {
     console.error('❌ Razorpay script not loaded');
     console.log('📋 Debugging info:');
     console.log('- Current domain:', window.location.hostname);
-    console.log('- Razorpay key:', import.meta.env.VITE_RAZORPAY_KEY ? '✓ Set' : '✗ Missing');
     console.log('- Window.Razorpay:', window.Razorpay);
     onError('Razorpay payment system not loaded. Please refresh the page and try again.');
+    return;
+  }
+
+  // Verify key is available
+  if (!razorpayKey) {
+    console.error('❌ Razorpay key not found');
+    onError('Razorpay key not configured. Please contact support.');
     return;
   }
 
@@ -43,10 +59,10 @@ export const initiateRazorpayPayment = async (
     console.log('💳 Initiating Razorpay payment:');
     console.log('- Amount:', amount, 'INR');
     console.log('- Domain:', window.location.hostname);
-    console.log('- Key:', import.meta.env.VITE_RAZORPAY_KEY?.substring(0, 10) + '...');
+    console.log('- Key:', razorpayKey?.substring(0, 15) + '...');
 
     const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY,
+      key: razorpayKey,
       amount: amountInPaise,
       currency: 'INR',
       name: 'Gravity Job Assistance',

@@ -14,17 +14,36 @@ export default function PaymentReturn() {
   useEffect(() => {
     const handlePaymentReturn = async () => {
       try {
-        // Get candidate data from session storage
-        const candidateDataStr = sessionStorage.getItem('pendingCandidateData');
+        // Get candidate data from URL params or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const candidateParam = urlParams.get('candidate');
         
-        if (!candidateDataStr) {
+        let candidateData: CandidateData | null = null;
+
+        if (candidateParam) {
+          try {
+            candidateData = JSON.parse(decodeURIComponent(candidateParam));
+          } catch (e) {
+            console.error('Error parsing candidate from URL:', e);
+          }
+        }
+
+        // Fallback to localStorage
+        if (!candidateData) {
+          const candidateDataStr = localStorage.getItem('pendingCandidateData');
+          if (candidateDataStr) {
+            candidateData = JSON.parse(candidateDataStr);
+          }
+        }
+
+        if (!candidateData) {
           setError('No pending registration found. Please start over.');
           setLoading(false);
           return;
         }
 
-        const candidateData: CandidateData = JSON.parse(candidateDataStr);
-        
+        console.log('💾 Processing payment return for:', candidateData.name);
+
         // Mark payment as successful
         candidateData.paymentStatus = 'success';
         candidateData.paymentId = 'pay_' + Date.now();
@@ -38,7 +57,8 @@ export default function PaymentReturn() {
         setSuccessCandidate(candidateData);
         setSuccess(true);
         
-        // Clear session storage
+        // Clear storage
+        localStorage.removeItem('pendingCandidateData');
         sessionStorage.removeItem('pendingCandidateData');
         
         setLoading(false);

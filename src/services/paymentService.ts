@@ -11,11 +11,7 @@ declare global {
 let lastPaymentAttempt = 0;
 const PAYMENT_COOLDOWN = 2000; // 2 seconds between attempts
 
-// Demo mode for testing without Firestore
-const DEMO_MODE = import.meta.env.MODE === 'development' || 
-                  (typeof window !== 'undefined' && (window as any).__DEMO_MODE__);
-
-// Razorpay Payment Link
+// Razorpay Payment Link with return URL
 const RAZORPAY_PAYMENT_LINK = 'https://rzp.io/rzp/vgMJARt';
 
 export const initiateRazorpayPayment = async (
@@ -36,45 +32,16 @@ export const initiateRazorpayPayment = async (
     console.log('- Link:', RAZORPAY_PAYMENT_LINK);
     console.log('- Candidate:', candidateData.name);
 
-    // Store candidate data in session storage for post-payment retrieval
-    sessionStorage.setItem('pendingCandidateData', JSON.stringify(candidateData));
+    // Store candidate data in localStorage for post-payment retrieval
+    localStorage.setItem('pendingCandidateData', JSON.stringify(candidateData));
     
-    // Open payment link in new tab
-    const paymentWindow = window.open(RAZORPAY_PAYMENT_LINK, '_blank');
-    
-    if (!paymentWindow) {
-      onError('Please allow pop-ups to proceed with payment');
-      return;
-    }
+    // Create return URL with candidate data encoded
+    const returnUrl = `${window.location.origin}/payment-return?candidate=${encodeURIComponent(JSON.stringify(candidateData))}`;
+    console.log('- Return URL:', returnUrl);
 
-    console.log('🔓 Payment link opened in new window');
-    
-    // Check if payment was completed (user returns to app)
-    // This is a simplified approach - in production, use webhooks
-    const checkPaymentInterval = setInterval(() => {
-      if (paymentWindow.closed) {
-        clearInterval(checkPaymentInterval);
-        console.log('✅ Payment window closed - checking payment status');
-        
-        // Simulate successful payment for now
-        // In production, verify payment via Razorpay API
-        const mockResponse: PaymentResponse = {
-          razorpay_payment_id: 'pay_' + Date.now(),
-          razorpay_order_id: 'order_' + Date.now(),
-          razorpay_signature: 'sig_' + Date.now(),
-        };
-        
-        onSuccess(mockResponse);
-      }
-    }, 1000);
-
-    // Timeout after 30 minutes
-    setTimeout(() => {
-      clearInterval(checkPaymentInterval);
-      if (!paymentWindow.closed) {
-        paymentWindow.close();
-      }
-    }, 30 * 60 * 1000);
+    // Redirect to payment link
+    // The payment link should be configured in Razorpay dashboard with this return URL
+    window.location.href = RAZORPAY_PAYMENT_LINK;
 
   } catch (error) {
     console.error('❌ Payment error:', error);

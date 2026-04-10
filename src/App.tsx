@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import RegistrationForm from './components/RegistrationForm';
 import AdminDashboard from './pages/AdminDashboard';
-import RazorpayTerms from './pages/RazorpayTerms';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -52,6 +51,11 @@ export default function App() {
   // Check if Razorpay test page is requested
   if (window.location.pathname === '/razorpay-test') {
     return <RazorpayTest />;
+  }
+
+  // Check if Razorpay terms page is requested
+  if (window.location.pathname === '/razorpay-terms') {
+    return <RazorpayTerms onClose={() => window.history.back()} />;
   }
 
   // Check if Razorpay terms page is requested

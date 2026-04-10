@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import RegistrationForm from './components/RegistrationForm';
 import AdminDashboard from './pages/AdminDashboard';
-import TestPage from './pages/TestPage';
-import FirestoreDebugPage from './pages/FirestoreDebugPage';
-import RazorpayDiagnostic from './pages/RazorpayDiagnostic';
-import RazorpayTest from './pages/RazorpayTest';
 import RazorpayTerms from './pages/RazorpayTerms';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
@@ -18,6 +14,26 @@ import { theme } from './styles/theme';
 export default function App() {
   const [showForm, setShowForm] = useState(false);
   const [isAdminMode, setIsAdminMode] = useState(false);
+
+  // Check if test page is requested
+  if (window.location.pathname === '/test') {
+    return <TestPage />;
+  }
+
+  // Check if debug page is requested
+  if (window.location.pathname === '/debug') {
+    return <FirestoreDebugPage />;
+  }
+
+  // Check if Razorpay diagnostic page is requested
+  if (window.location.pathname === '/razorpay-diagnostic') {
+    return <RazorpayDiagnostic />;
+  }
+
+  // Check if Razorpay test page is requested
+  if (window.location.pathname === '/razorpay-test') {
+    return <RazorpayTest />;
+  }
 
   // Check if test page is requested
   if (window.location.pathname === '/test') {
